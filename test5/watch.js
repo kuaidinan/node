@@ -7,7 +7,7 @@ var processedDir = './done';
 util.inherits(Watcher, events.EventEmitter);
 
 function Watcher(watcherDir, processedDir) {
-  this.watchDir = watchDir;
+  this.watchDir = watcherDir;
   this.processedDir = processedDir;
 }
 
@@ -20,7 +20,6 @@ Watcher.prototype.watch = function () {
     }
   })
 }
-
 Watcher.prototype.start = function () {
   var watcher = this;
   fs.watchFile(watchDir, function () {
