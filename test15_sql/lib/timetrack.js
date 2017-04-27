@@ -1,11 +1,13 @@
 var qs = require('querystring');
 
+// 发送和html响应
 exports.sendHtml = function (res, html) {
   res.setHeader('Content-Type', 'text/html;charset=utf-8;');
   res.setHeader('Content-Length', Buffer.byteLength(html));
   res.end(html);
 };
 
+// http post 数据
 exports.parseReceivedData = function (req, cb) {
   var body = "";
   req.setEncoding('utf8');
@@ -18,6 +20,7 @@ exports.parseReceivedData = function (req, cb) {
   })
 }
 
+// 解析简单的表单
 exports.actionForm = function (id, path, label) {
   var html = `<form method="POST" action="${path}">
     <input type="hidden" name="id" value=${id} />
@@ -26,6 +29,7 @@ exports.actionForm = function (id, path, label) {
   return html;
 }
 
+// 添加工作记录
 exports.add = function (db, req, res) {
   exports.parseReceivedData(req, function (work) {
     db.query(

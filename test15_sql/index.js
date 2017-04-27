@@ -31,6 +31,7 @@ var server = http.createServer(function(req,res){
           break;
         case '/archived':
           work.showArchived(db,res);
+          break;
       }
       break;
   }
@@ -50,5 +51,3 @@ db.query(
       server.listen(3000,'127.0.0.1');
     }
 )
-
-server.listen('4444');
