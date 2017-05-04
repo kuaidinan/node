@@ -17,7 +17,7 @@ module.exports = function route(obj) {
       var re = new RegExp('^' + path + '$');
       console.log(url.pathname);
       console.log(re);
-        var captures = url.pathname.match(re)
+        var captures = url.pathname.match(re);
         console.log(captures);
         if (captures) {
           var args = [req,res].concat(captures.splice(1));
