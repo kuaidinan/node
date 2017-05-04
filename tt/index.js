@@ -1,22 +1,21 @@
 var connect = require('connect');
-var router = require('./middleware/router');
-// 路由地址 请求接口
+var router = require('./middle/router.js');
 var routes = {
   GET: {
     '/users': function (req, res) {
-      res.end('tobi,loki,ferret');
+      res.end('xq xq xq');
     },
     '/user/:id': function (req, res, id) {
-      res.end('user ' + id);
+      res.end(`user${id}`)
     }
   },
   DELETE: {
     '/user/:id': function (req, res, id) {
-      res.end('deleted user ' + id);
+      res.end(`delete user ${id}`);
     }
   }
 };
-
 connect()
   .use(router(routes))
-  .listen(3000);
+  .listen(1111);
+
