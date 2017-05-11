@@ -5,5 +5,10 @@
 </head>
 <body>
   <div><%= test %></div>
+  <ul>
+    <% show.forEach(function(item){ %>
+      <li><%= item.name %> <img src=<%= item.url %> alt=""></li>
+    <% }) %>
+  </ul>
 </body>
 </html>
