@@ -8,7 +8,9 @@
   <ul>
     <% photos.forEach(function(item){ %>
     <li><%= item.name %></li>
-    <img src='/photos/<%= item.path %>' alt="">
+    <a href='/photo/<%= item.id %>/download'>
+      <img src='/photos/<%= item.path %>' alt="">
+    </a>
     <% }) %>
   </ul>
   <a href="./upload">跳转</a>

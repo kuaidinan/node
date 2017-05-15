@@ -3,20 +3,20 @@ var app = express();
 var path = require('path');
 var multer = require('multer');
 
-app.set('views',path.join(__dirname,'photos'));
+app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
 var photos = require('./routes/photos'); // 自定义路由模块  
-app.set('photos', path.join(__dirname, 'public/photos')); //图片文件夹路径
+app.set('photos', path.join(__dirname, 'static/photos')); //图片文件夹路径
 
 var upload = multer({dest:app.get('photos')});
   
-app.get('/', photos.list);  
-app.get('/upload', photos.form);  
+app.get('/', photos.list);
+app.get('/upload', photos.form);
 app.post('/upload', upload.single('photoImage'),photos.submit());  
 app.get('/photo/:id/download', photos.download(app.get('photos')));
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'static')));
 
 app.listen('3000',function(err){
   if(err) throw err;
