@@ -18,7 +18,6 @@ exports.form = function (req, res) {
 //上传图片  
 exports.submit = function (dir) {
     return function (req, res, next) {
-        console.log(req.file);
         var imgPath = req.file.path;
         var needPath = path.join(req.file.destination,req.file.originalname);
         var name = req.body.photoName || req.file.originalname;
