@@ -5,6 +5,12 @@
 </head>
 <body>
   列表页面
+  <ul>
+    <% photos.forEach(function(item){ %>
+    <li><%= item.name %></li>
+    <img src='/photos/<%= item.path %>' alt="">
+    <% }) %>
+  </ul>
   <a href="./upload">跳转</a>
 </body>
 </html>

@@ -6,6 +6,8 @@ var list = require('./routes/list.js');
 
 app.set('views',path.join(__dirname,'views'));
 
+app.use(express.static(path.join(__dirname,'image')));
+
 app.set('view engine','ejs');
 
 app.use('/list',list);
