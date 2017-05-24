@@ -3,15 +3,15 @@ var bcrypt = require('bcrypt');
 var db = redis.createClient();
 db.auth('hello');
 
-module.exports = Users;
+module.exports = User;
 
-function Users(obj) {
+function User(obj) {
   for (var key in obj) {
     this[key] = obj[key];
   }
 }
 
-Users.prototype.save = function (fn) {
+User.prototype.save = function (fn) {
   if (this.id){
     this.update(fn);
   } else {
@@ -27,7 +27,7 @@ Users.prototype.save = function (fn) {
   }
 }
 
-Users.prototype.update = function(fn){
+User.prototype.update = function(fn){
   var user = this;
   var id = user.id;
   db.set('user:id:' + user.name,id,function(err){
@@ -45,7 +45,7 @@ Users.prototype.update = function(fn){
   });
 };
 
-Users.prototype.hashPassword = function(fn) {
+User.prototype.hashPassword = function(fn) {
   var user = this;
   bcrypt.genSalt(12, function(err,salt){
     if(err) return fn(err);
@@ -58,12 +58,34 @@ Users.prototype.hashPassword = function(fn) {
   })
 }
 
-var test = new Users({
-  name:'xq',
-  pass:'im a xq',
-  age:'18'
-});
-test.save(function(err){
-  if (err) throw err;
-  console.log('user id %d',test.id);
-})
+User.getByName = function(name,fn){
+  User.getId(name,function(err,id){
+    if (err) return fn(err);
+    User.get(id,fn);
+  });
+};
+
+User.getId = function(name,fn){
+  db.get('user:id:' + name, fn);
+};
+
+User.get = function (id,fn){
+  db.hgetall('user:' + id, function(err,user){
+    if (err) return fn(err);
+    fn(null,new User(user));
+  });
+};
+
+User.authenticate = function(name,pass,fn) {
+  console.log(name);
+  console.log(pass);
+  User.getByName(name,function(err,user){
+    if (err) return fn(err);
+    if (!user.id) return fn();
+    bcrypt.hash(pass,user.salt,function(err,hash){
+      if (err) return fn(err);
+      if (hash == user.pass) return fn(null,user);
+      fn();
+    });
+  });
+};
