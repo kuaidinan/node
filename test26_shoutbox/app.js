@@ -29,6 +29,8 @@ app.use(session({
 }));
 app.use(express.static(__dirname+'/public'));
 
+var api = require('./routes/api.js');
+app.use('/api',api.auth);// api 凭证
 app.use(user);
 app.use(messages);
 
@@ -47,6 +49,8 @@ app.post('/login',login.submit);
 app.get('/logout',login.logout);
 
 app.get('/:page?',page(Entry.count,2),entries.list);
+
+app.get('/api/user/:id',api.user);
 
 app.listen('3000',function(err){
   if (err) throw err;

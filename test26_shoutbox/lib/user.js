@@ -58,6 +58,13 @@ User.prototype.hashPassword = function(fn) {
   })
 }
 
+User.prototype.toJson = function(){
+  return {
+    id:this.id,
+    name:this.name
+  }
+}
+
 User.getByName = function(name,fn){
   User.getId(name,function(err,id){
     if (err) return fn(err);
@@ -72,13 +79,11 @@ User.getId = function(name,fn){
 User.get = function (id,fn){
   db.hgetall('user:' + id, function(err,user){
     if (err) return fn(err);
-    fn(null,new User(user));
+    fn(null,new User(user).toJson());
   });
 };
 
 User.authenticate = function(name,pass,fn) {
-  console.log(name);
-  console.log(pass);
   User.getByName(name,function(err,user){
     if (err) return fn(err);
     if (!user.id) return fn();
