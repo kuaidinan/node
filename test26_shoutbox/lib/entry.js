@@ -1,6 +1,5 @@
 var redis = require('redis');
 var db = redis.createClient();
-db.auth('hello');
 
 module.exports = Entry;
 

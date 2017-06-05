@@ -1,7 +1,6 @@
 var redis = require('redis');
 var bcrypt = require('bcrypt');
 var db = redis.createClient();
-db.auth('hello');
 
 module.exports = User;
 
